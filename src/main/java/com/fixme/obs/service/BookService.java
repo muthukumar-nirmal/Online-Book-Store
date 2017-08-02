@@ -16,5 +16,5 @@ public interface BookService {
 	Book addOrUpdateBook(Book book);
 	void deleteBook(Long id);
 	Book getBookByID(Long id);
-	Book getBookByTitle(String title);
+	List<Book> getBookByTitle(String isbn);
 }

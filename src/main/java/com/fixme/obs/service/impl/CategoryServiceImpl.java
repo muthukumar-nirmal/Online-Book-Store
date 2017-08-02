@@ -50,12 +50,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category getCategoryByName(String name) {
-		Category category = categoryRepository.getCategoryByName(name);
-		if (category != null) {
-			return category;
+	public List<Category> getCategoryByName(String name) {
+		List<Category> categories = categoryRepository.findByName(name);
+		if(categories.isEmpty()){
+			return null;
 		}
-		return null;
+		return categories;
 	}
 
 }

@@ -4,13 +4,14 @@
 package com.fixme.obs.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,23 +25,27 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	@Basic(optional = false)
-	@Column(name = "name", nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long categoryId;
 	private String name;
-
-	@Basic(optional = true)
-	@Column(name = "description")
 	private String description;
-
-	public Long getId() {
-		return id;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	private List<Book> books;
+	
+	public Category() {}
+	
+	public Category(String name) {
+		super();
+		this.name = name;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getName() {
@@ -58,4 +63,18 @@ public class Category implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
+	@Override
+	public String toString() {
+		return "Category type: " + name;
+	}
+	
 }

@@ -52,9 +52,9 @@ public class CategoryController {
 	 */
 	@RequestMapping(value="/update", method = RequestMethod.PUT)
 	public ResponseEntity<Category> updateCategory(@RequestBody Category category){
-		Category existingCategory = categoryService.getCategoryByID(category.getId());
+		Category existingCategory = categoryService.getCategoryByID(category.getCategoryId());
 		if(existingCategory == null){
-			logger.debug("Category with id " + category.getId() + " does not exists");
+			logger.debug("Category with id " + category.getCategoryId() + " does not exists");
 			return new ResponseEntity<Category>(HttpStatus.NOT_FOUND);
 		}else{
 			categoryService.addOrUpdateCategory(category);
@@ -68,14 +68,14 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public ResponseEntity<Category> getByCategoryName(@RequestParam(value = "name") String name){
-		Category category = categoryService.getCategoryByName(name);
-		if(category == null){
-			logger.debug("Category with name " + name + "dose not exists");
-			return new ResponseEntity<Category>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<List<Category>> getByCategoryName(@RequestParam(value = "name") String name){
+		List<Category> categories = categoryService.getCategoryByName(name);
+		if(categories.isEmpty()){
+			logger.debug("Category with name " + name + "does not exists");
+			return new ResponseEntity<List<Category>>(HttpStatus.NOT_FOUND);
 		}
 		logger.debug("Category with name : " + name + "found");
-		return new ResponseEntity<Category>(category, HttpStatus.OK);
+		return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
 	}
 	
 	/**

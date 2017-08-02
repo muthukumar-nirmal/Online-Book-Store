@@ -4,7 +4,6 @@
 package com.fixme.obs.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,25 +23,38 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", nullable = false, updatable = false)
 	private Long id;
 	
-	@Column(name = "firstName")
+	@Column(name="firstName")
 	private String firstName;
 	
-	@Column(name = "lastName")
+	@Column(name="lastName")
 	private String lastName;
 	
-	@Column(name = "dateOfBirth")
-	private Date dateOfBirth;
+	@Column(name="email", nullable = false)
+	private String email;
 	
-	@Column(name = "emailAddress")
-	private String emailAddress;
+	@Column(name="password", nullable = false)
+	private String passwordHash;
 	
-	@Column(name = "password")
-	private String password;
+	@Column(name="role", nullable = false)
+	private String role;
 	
-	private Address address = new Address();
+	public User(){
+	}
+	
+	public User(Long id, String firstName, String lastName, String email,
+			String passwordHash, String role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.passwordHash = passwordHash;
+		this.role = role;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,35 +80,27 @@ public class User implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getRole() {
+		return role;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
