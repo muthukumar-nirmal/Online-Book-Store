@@ -30,7 +30,7 @@ public class Category implements Serializable {
 	private String name;
 	private String description;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Book> books;
 	
 	public Category() {}
