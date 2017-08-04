@@ -61,6 +61,7 @@ public class UserController {
 	@RequestMapping(value="/add", method = RequestMethod.POST)
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 		user.setPasswordHash(passwordEncryption.generateHash(user.getPasswordHash()));
+		user.setRole("USER");
 		userService.addOrUpdateUser(user);
 		logger.debug("Added:: " + user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
@@ -123,20 +124,19 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/validateLogin", method = RequestMethod.GET)
-	public ResponseEntity<Boolean> validateLogin(@RequestParam(name = "email") String email, @RequestParam(name="password") String password){
-		Boolean isAuthenticated = false;
+	public ResponseEntity<User> validateLogin(@RequestParam(name = "email") String email, @RequestParam(name="password") String password){
 		String hashedPassword = passwordEncryption.generateHash(password);
 		User user = userService.getUserByEmail(email);
 		if(user == null){
 			logger.debug("User with id " + email + " does not exists");
-			return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
 		if(hashedPassword.equals(user.getPasswordHash())){
-			isAuthenticated = true;
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}else{
-			isAuthenticated = false;
+			logger.debug("User with id " + email + " does not exists");
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<Boolean>(isAuthenticated, HttpStatus.OK);
 	}
 	
 	/**
