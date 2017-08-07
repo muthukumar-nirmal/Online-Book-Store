@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fixme.obs.config.PasswordEncryption;
 import com.fixme.obs.entity.User;
+import com.fixme.obs.service.AddressService;
 import com.fixme.obs.service.UserService;
 
 /**
@@ -33,6 +34,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	AddressService addressService;
 		
 	@Autowired
 	PasswordEncryption passwordEncryption;
@@ -62,6 +66,7 @@ public class UserController {
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 		user.setPasswordHash(passwordEncryption.generateHash(user.getPasswordHash()));
 		user.setRole("USER");
+		user.setAddress(addressService.addOrUpdateAddress(user.getAddress()));
 		userService.addOrUpdateUser(user);
 		logger.debug("Added:: " + user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
