@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @author muthu_m
  *
  */
+
 public class Address implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +20,7 @@ public class Address implements Serializable {
 	private String city;
 	private String postalCode;
 	private String country;
+
 	
 	public String getStreet() {
 		return street;
@@ -56,4 +58,5 @@ public class Address implements Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	
 }

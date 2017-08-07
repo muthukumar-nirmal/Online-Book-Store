@@ -3,15 +3,11 @@
  */
 var USER_BASE_URL = 'http://localhost:8080/api/user/';
 
-$(document).ready(function() {
-	$('#signinForm').show();
-});
-
 function login() {
 	var email = $('#inputEmail').val();
 	var password = $('#inputPassword').val();
 
-	if (email == null || email == '' && !isValidEmailAddress) {
+	if (email == null || email == '' || !isValidEmailAddress) {
 		alert("Invalid Email");
 		$('#inputEmail').focus();
 	} else if (password == null || email == '') {
@@ -26,7 +22,6 @@ function login() {
 				'email' : email,
 				'password' : password
 			},
-			async : false,
 			success : function(data) {
 				if(data != null){
 					$('#signinForm').hide();
@@ -53,18 +48,18 @@ function login() {
 
 function listUser(){
 	$('#signinForm').hide();
-	$('#userTableInfo').show();
+	$('#home').removeClass('active');
 	$.ajax({
 		type : 'GET',
 		url : USER_BASE_URL + 'list',
 		dataType : 'json',
-		async : false,
 		success : function(data){
-			console.log(data);
 			if(data != null){
+				console.log(JSON.stringify(data, undefined, 4));
+
 				var userInfo = "";
-				for(var index = 1; index < data.length; index++){
-					userInfo += '<tr><td>' + data.firstName + " " + data.lastName + '</td><td>' + data.email + '</td><td>' + data.role + '</td><td><a href="#" class="btn btn-primary" onClick="viewUser(\''+ data.id +'\')" style="padding: 3px 7px;">View</a></td></tr>';
+				for(var index = 0; index < data.length; index++){
+					userInfo += '<tr><td>' + data[index].firstName + " " + data[index].lastName + '</td><td>' + data[index].email + '</td><td>' + data[index].role + '</td><td><a href="#" class="btn btn-primary" onClick="viewUser(\''+ data[index].id +'\')" style="padding: 3px 7px;">View</a></td></tr>';
 				}
 				$('#userInfo').append(userInfo);
 				
@@ -75,7 +70,6 @@ function listUser(){
                     "bAutoWidth": false,
                     "bFilter": true,
                     "bSort": true,
-                    "pageLength": 5,
                     "aaSorting": [[0]],
                     "aoColumns": [
                         { "sWidth": '25%', "bSortable": true },
@@ -84,6 +78,8 @@ function listUser(){
                         { "sWidth": '3%', "bSortable": false }
                     ]
                 });
+                $('#user').addClass('active');
+				$('#userInformation').show();
 			}
 		}
 	});

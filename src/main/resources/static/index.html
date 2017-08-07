@@ -13,7 +13,7 @@
 
     <link href="csslib/bootstrap.min.css" rel="stylesheet">
     <link href="css/signin.css" rel="stylesheet">
-      <link href="jslib/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+     <link href="jslib/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -32,8 +32,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li id="user"><a href="" onclick="listUser()">User</a></li>
+            <li id="home" class="active"><a href="#">Home</a></li>
+            <li id="user"><a onclick="listUser()">User</a></li>
             <li id="books"><a href="#books">Books</a></li>
             <li id="category"><a href="#category">Category</a></li>
             <li id="aboutUs"><a href="#category">About Us</a></li>
@@ -58,7 +58,7 @@
     <div>
     	 <span id="name"></span>
     </div>
-      <div class="form-signin" id="signinForm" style="display: none">
+      <div class="form-signin" id="signinForm">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
@@ -72,7 +72,9 @@
         <button class="btn btn-lg btn-primary btn-block" onclick="login()">Sign in</button>
       </div>
       
-		<table class="table table-striped table-bordered" cellspacing="0"
+      <div id="userInformation" style="display: none">
+      	<h2>User Information</h2>
+      		<table class="table table-striped table-bordered" cellspacing="0"
 			width="100%" id="userTableInfo">
 			<thead>
 				<tr>
@@ -85,13 +87,13 @@
 			<tbody id="userInfo">
 			</tbody>
 		</table>
-
+      </div>
+      
     </div> <!-- /container -->
      <script type="text/javascript" src="jslib/jquery.min.js"></script>
-    <script type="text/javascript" src="jslib/dataTable/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="jslib/dataTable/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="jslib/dataTable/js/dataTables.bootstrap.min.js"></script>
      <script type="text/javascript" src="jslib/bootstrap.min.js"></script>
-      <script type="text/javascript" src="jslib/dataTable/js/dataTables.bootstrap.min.js"></script>
-      
     <script type="text/javascript" src="js/user/common.js"></script>
     <script type="text/javascript" src="js/user/user.js"></script>
   </body>
