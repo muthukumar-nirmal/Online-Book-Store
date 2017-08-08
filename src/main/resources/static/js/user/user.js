@@ -1,7 +1,6 @@
 /**
  * 
  */
-var USER_BASE_URL = 'http://localhost:8080/api/user/';
 
 function login() {
 	var email = $('#inputEmail').val();
@@ -16,7 +15,7 @@ function login() {
 	} else {
 		$.ajax({
 			type : 'GET',
-			url : USER_BASE_URL + 'validateLogin',
+			url : BASE_URL + 'user/validateLogin',
 			dataType : 'json',
 			data : {
 				'email' : email,
@@ -26,6 +25,8 @@ function login() {
 				if(data != null){
 					$('#signinForm').hide();
 					$('#headerInfo').show();
+					removeActiveClass();
+					$('#home').addClass('active');
 					$('#name').html("Welcome : " + data.firstName + data.lastName);
 					if(data.role == 'ADMIN'){
 						$('#user').show();
@@ -48,15 +49,14 @@ function login() {
 
 function listUser(){
 	$('#signinForm').hide();
-	$('#home').removeClass('active');
+	removeActiveClass();
+	$('#user').addClass('active');
 	$.ajax({
 		type : 'GET',
-		url : USER_BASE_URL + 'list',
+		url : BASE_URL + 'user/list',
 		dataType : 'json',
 		success : function(data){
 			if(data != null){
-				console.log(JSON.stringify(data, undefined, 4));
-
 				var userInfo = "";
 				for(var index = 0; index < data.length; index++){
 					userInfo += '<tr><td>' + data[index].firstName + " " + data[index].lastName + '</td><td>' + data[index].email + '</td><td>' + data[index].role + '</td><td><a href="#" class="btn btn-primary" onClick="viewUser(\''+ data[index].id +'\')" style="padding: 3px 7px;">View</a></td></tr>';
@@ -78,7 +78,7 @@ function listUser(){
                         { "sWidth": '3%', "bSortable": false }
                     ]
                 });
-                $('#user').addClass('active');
+                hideAndShowTable();
 				$('#userInformation').show();
 			}
 		}

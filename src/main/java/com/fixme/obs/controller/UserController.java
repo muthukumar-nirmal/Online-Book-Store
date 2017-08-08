@@ -84,6 +84,7 @@ public class UserController {
 			logger.debug("User with email " + user.getEmail() + " does not exists");
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}else{
+			user.setAddress(addressService.addOrUpdateAddress(user.getAddress()));
 			userService.addOrUpdateUser(user);
 			return new ResponseEntity<User>(HttpStatus.OK);
 		}

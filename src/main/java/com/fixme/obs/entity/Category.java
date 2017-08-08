@@ -4,14 +4,11 @@
 package com.fixme.obs.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,9 +26,7 @@ public class Category implements Serializable {
 	private Long categoryId;
 	private String name;
 	private String description;
-	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	private List<Book> books;
+
 	
 	public Category() {}
 	
@@ -64,14 +59,6 @@ public class Category implements Serializable {
 		this.description = description;
 	}
 
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
-	
 	@Override
 	public String toString() {
 		return "Category type: " + name;
