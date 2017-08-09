@@ -16,12 +16,14 @@ function removeActiveClass(){
 	$('#books').removeClass('active');
 	$('#aboutUs').removeClass('active');
 	$('#contactUs').removeClass('active');
+	$('#history').removeClass('active');
 }
 
 function hideAndShowTable(){
 	$('#userInformation').hide();
 	$('#categoryInformation').hide();
 	$('#adminDashboard').hide();
+	$('#loginHistoryInformation').hide();
 }
 
 function loadHome(){

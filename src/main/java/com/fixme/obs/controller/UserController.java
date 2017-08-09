@@ -4,6 +4,7 @@
 package com.fixme.obs.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fixme.obs.config.PasswordEncryption;
+import com.fixme.obs.entity.LoginInfo;
 import com.fixme.obs.entity.User;
 import com.fixme.obs.service.AddressService;
+import com.fixme.obs.service.LoginInfoService;
 import com.fixme.obs.service.UserService;
 
 /**
@@ -41,12 +44,15 @@ public class UserController {
 	@Autowired
 	PasswordEncryption passwordEncryption;
 	
+	@Autowired
+	LoginInfoService loginInfoService;
+	
 	/**
 	 * This method is used to list all the user information 
 	 * @return
 	 */
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ResponseEntity<List<User>> getAllBooks(){
+	public ResponseEntity<List<User>> getAllUsers(){
 		List<User> users = userService.findAll();
 		if(users.isEmpty()){
 			logger.debug("User does not exists");
@@ -138,6 +144,10 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
 		if(hashedPassword.equals(user.getPasswordHash())){
+			LoginInfo loginInfo = new LoginInfo();
+			loginInfo.setEmail(user.getEmail());
+			loginInfo.setLoginTime(new Date().toString());
+			loginInfoService.save(loginInfo);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}else{
 			logger.debug("User with id " + email + " does not exists");
