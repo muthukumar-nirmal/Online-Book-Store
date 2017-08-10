@@ -17,7 +17,7 @@ import com.fixme.obs.service.LoginInfoService;
  *
  */
 @Service
-public class LoginServiceImpl implements LoginInfoService {
+public class LoginInfoServiceImpl implements LoginInfoService {
 
 	@Autowired
 	LoginInfoRepository loginInfoRepository;
@@ -30,6 +30,11 @@ public class LoginServiceImpl implements LoginInfoService {
 	@Override
 	public List<LoginInfo> listAll() {
 		return loginInfoRepository.findAll();
+	}
+
+	@Override
+	public List<LoginInfo> findByEmail(String email) {
+		return loginInfoRepository.findByEmail(email);
 	}
 
 }

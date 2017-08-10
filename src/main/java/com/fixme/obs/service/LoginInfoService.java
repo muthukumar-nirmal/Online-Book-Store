@@ -15,5 +15,6 @@ public interface LoginInfoService {
 	
 	LoginInfo save(LoginInfo loginInfo);
 	List<LoginInfo> listAll();
+	List<LoginInfo> findByEmail(String email);
 
 }

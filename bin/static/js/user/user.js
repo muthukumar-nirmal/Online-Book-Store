@@ -28,6 +28,7 @@ function login() {
 					removeActiveClass();
 					$('#home').addClass('active');
 					$('#adminDashboard').show();
+					$.cookie('emailAddress', data.email);
 					$('#name').html(data.firstName + " " + data.lastName);
 					if (data.role == 'ADMIN') {
 						$('#user').show();
@@ -50,6 +51,30 @@ function login() {
 		    }  
 		});
 	}
+}
+
+function logout(){
+	var email = $.cookie('emailAddress');
+	$.ajax({
+		type : 'GET',
+		url : BASE_URL + 'user/logout',
+		dataType : 'json',
+		data : {
+			'email' : email
+		},
+		success : function(data) {
+			if(data == true){
+				$.removeCookie('emailAddress');
+				$('#headerInfo').hide();
+				hideAndShowTable();
+				$('#signinForm').show();
+			}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) { 
+	        console.log("Status: " + textStatus); 
+	        console.log("Error: " + errorThrown); 
+	    }  
+	});
 }
 
 function listUser() {

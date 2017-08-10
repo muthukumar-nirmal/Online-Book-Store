@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -153,6 +155,30 @@ public class UserController {
 			logger.debug("User with id " + email + " does not exists");
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
+	}
+	/**
+	 * This method is used to invalidate the user 
+	 * @param email
+	 * @param session
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> logout(@RequestParam(name = "email")String email, HttpSession session){
+		List<LoginInfo> loginInfo = loginInfoService.findByEmail(email);
+		if(loginInfo.isEmpty()){
+			logger.debug("Login information doesn't exists");
+			return new ResponseEntity<Boolean>(HttpStatus.NO_CONTENT);
+		}
+		logger.debug("Session invalidated");
+		session.invalidate();
+		for (LoginInfo loginInfo2 : loginInfo) {
+			if(loginInfo2.getLogoutTime() == null){
+				loginInfo2.setLogoutTime(new Date().toString());
+				loginInfoService.save(loginInfo2);
+			}
+		}
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 	
 	/**
