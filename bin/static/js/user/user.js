@@ -147,6 +147,70 @@ function listUser() {
 	});
 }
 
+function addUser(){
+	var firstName = $('#firstName').val();
+	var lastName = $('#lastName').val();
+	var email = $('#email').val();
+	var password = $('#password').val();
+	var confirmPassword = $('#confirmPassword').val();
+	var houseNumber = $('#houseNumber').val();
+	var boxNumber = $('#boxNumber').val();
+	var street = $('#street').val();
+	var city = $('#city').val();
+	var country = $('#country').val();
+	var zip = $('#zip').val();
+	
+	if (firstName == null || firstName == '') {
+		alert("First name should not be empty");
+		$('#firstName').focus();
+	} else if(email == null || email == '' || !isValidEmailAddress) {
+		alert("Email should not be empty");
+		$('#inputEmail').focus();
+	} else if (password == null || email == '') {
+		alert("Password should not be empty");
+		$('#inputPassword').focus();
+	} else if (password == null || email == '') {
+		alert("Password should not be empty");
+		$('#inputPassword').focus();
+	} else if (password != confirmPassword) {
+		alert("Password and confirm password does not match");
+		$('#confirmPassword').focus();
+	} else {
+		// ajax call
+		var userObject = {
+			firstName : firstName,
+			lastName : lastName,
+			email : email,
+			password : password,
+			address : {
+				houseNumber : houseNumber,
+				boxNumber : boxNumber,
+				street : street,
+				city : city,
+				country : country,
+				postalCode : zip
+			}
+		};
+		$.ajax({
+			type : 'POST',
+			url : BASE_URL + 'user/add',
+			dataType : 'json',
+			data : JSON.stringify(userObject),
+			contentType: "application/json; charset=utf-8",
+			success : function(data) {
+				if(data != null){
+					listUser();
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+		        console.log("Status: " + textStatus); 
+		        console.log("Error: " + errorThrown); 
+		    }  
+		});
+		
+	} 
+}
+
 function loginHistory(){
 	$('#signinForm').hide();
 	removeActiveClass();
