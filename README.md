@@ -74,3 +74,4 @@ The system has two major actors and each actor has its features to carry out as 
 	2. Book	(Long id, String title, String description, BigDecimal price, Integer year, String author, String Isbn, Category category)
 	3. User (Long id, String firstName, String lastName, Date dateOfBirth, Address address = new Address(), String emailAddress, String username, String password, List<Role> roles = new ArrayList<Role>())
 	4. Address ( String street, String houseNumber, String boxNumber, String city, String postalCode, String country)
+https://github.com/Baeldung/spring-security-registration
